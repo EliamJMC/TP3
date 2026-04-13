@@ -2,9 +2,7 @@
 #include<stdint.h>
 #include<string>
 
-// LES STRUCTURES DE DONNÉES IMPOSÉES
-
-const size_t REPONDANTS_MAX = 500; // nombre maximun de répondants du sondage
+const size_t REPONDANTS_MAX = 500; // Nombre maximun de répondants du sondage
 
 struct Protection
 {
@@ -28,5 +26,9 @@ struct Repondant
 	int scolarite;
 };
 
-uint8_t stat01(bool r1[]);
+uint16_t stat01(const bool* r1, const size_t& nbRepondants);
+uint16_t stat02(const char r3[], const size_t& nbRepondants);
+uint8_t stat03(const int r2[], const Repondant* repondants, const size_t& nbRepondants);
+float stat04(const Protection& protection, const Repondant* repondants, const size_t& nbRepondants);
+float stat05(const int r2[], const Repondant* repondants, const size_t nbRepondants);
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[]);

@@ -15,14 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Principal.cpp">
+    <ClInclude Include="Header\Liste.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Stats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Liste.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Liste.cpp">
+    <ClCompile Include="Source\Principal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Stats.cpp">
+    <ClCompile Include="Source\Stats.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Users\Jozad\OneDrive\Documentos\SchoolDocs\Session_2\C-21-Prog\TP3_etudiants\C21_LAB_3_Base.cpp">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

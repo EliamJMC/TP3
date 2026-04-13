@@ -4,6 +4,65 @@
 #include <fstream>
 #include <windows.h>
 
+#include "../Header/Stats.h"
+
+uint16_t stat01(const bool* r1, const size_t& nbRepondants) {
+	if (nbRepondants < 1) return 0;
+	uint16_t count = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if (*(r1+i) == true)
+			count++;
+	}
+	return count;
+}
+uint16_t stat02(const char r3[], const size_t& nbRepondants) {
+	if (nbRepondants < 1) return 0;
+	uint16_t count = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if (r3[i] == 'O')
+			count++;
+	}
+	return count;
+}
+uint8_t stat03(const int r2[], const Repondant* repondants, const size_t& nbRepondants) {
+	if (nbRepondants < 1) return 0;
+	uint16_t total = 0;
+	uint16_t nbRepEntreTrenteEtQuarente = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if ((repondants + i)->age > 29 && (repondants + i)->age < 40) {
+			total += static_cast<uint16_t>(r2[i]);
+			nbRepEntreTrenteEtQuarente++;
+		}
+	}
+	return total / nbRepEntreTrenteEtQuarente;
+}
+float stat04(const Protection& protection, const Repondant* repondants, const size_t& nbRepondants) {
+	if (nbRepondants < 1) return 0;
+	float total = 0;
+	uint16_t nbRepUtiliserDecoDormir = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if (protection.r5[i] == 'O' || protection.r6[i] == 'O') {
+			total += static_cast<float>((repondants + i)->age);
+			nbRepUtiliserDecoDormir++;
+		}
+	}
+	return total / nbRepUtiliserDecoDormir;
+}
+float stat05(const int r2[], const Repondant* repondants, const size_t nbRepondants) {
+	if (nbRepondants < 1) return 0.0f;
+	uint16_t nbRepVaudreuil = 0;
+	uint16_t nbRepPlusQueUnMasque = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if ((repondants + i)->ville == "Vaudreuil") {
+			nbRepVaudreuil++;
+			if (r2[i] > 1) {
+				nbRepPlusQueUnMasque++;
+			}
+		}
+	}
+	return static_cast<float>(nbRepPlusQueUnMasque) / nbRepVaudreuil * 100.0f;
+}
+
 
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[])
 {
