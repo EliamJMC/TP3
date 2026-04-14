@@ -8,24 +8,31 @@
 
 uint16_t stat01(const bool* r1, const size_t& nbRepondants) {
 	if (nbRepondants < 1) return 0;
+
 	uint16_t count = 0;
 	for (uint16_t i = 0; i < nbRepondants; i++) {
 		if (*(r1+i) == true)
 			count++;
 	}
+
 	return count;
 }
+
 uint16_t stat02(const char r3[], const size_t& nbRepondants) {
 	if (nbRepondants < 1) return 0;
+
 	uint16_t count = 0;
 	for (uint16_t i = 0; i < nbRepondants; i++) {
 		if (r3[i] == 'O')
 			count++;
 	}
+
 	return count;
 }
-uint8_t stat03(const int r2[], const Repondant* repondants, const size_t& nbRepondants) {
+
+float stat03(const int r2[], const Repondant* repondants, const size_t& nbRepondants) {
 	if (nbRepondants < 1) return 0;
+
 	uint16_t total = 0;
 	uint16_t nbRepEntreTrenteEtQuarente = 0;
 	for (uint16_t i = 0; i < nbRepondants; i++) {
@@ -34,10 +41,14 @@ uint8_t stat03(const int r2[], const Repondant* repondants, const size_t& nbRepo
 			nbRepEntreTrenteEtQuarente++;
 		}
 	}
-	return total / nbRepEntreTrenteEtQuarente;
+	if (nbRepEntreTrenteEtQuarente < 1) return 0.0f;
+
+	return static_cast<float>(total) / nbRepEntreTrenteEtQuarente;
 }
+
 float stat04(const Protection& protection, const Repondant* repondants, const size_t& nbRepondants) {
 	if (nbRepondants < 1) return 0;
+
 	float total = 0;
 	uint16_t nbRepUtiliserDecoDormir = 0;
 	for (uint16_t i = 0; i < nbRepondants; i++) {
@@ -46,10 +57,14 @@ float stat04(const Protection& protection, const Repondant* repondants, const si
 			nbRepUtiliserDecoDormir++;
 		}
 	}
+	if (nbRepUtiliserDecoDormir < 1) return 0.0f;
+
 	return total / nbRepUtiliserDecoDormir;
 }
+
 float stat05(const int r2[], const Repondant* repondants, const size_t nbRepondants) {
 	if (nbRepondants < 1) return 0.0f;
+
 	uint16_t nbRepVaudreuil = 0;
 	uint16_t nbRepPlusQueUnMasque = 0;
 	for (uint16_t i = 0; i < nbRepondants; i++) {
@@ -60,9 +75,63 @@ float stat05(const int r2[], const Repondant* repondants, const size_t nbReponda
 			}
 		}
 	}
+	if (nbRepVaudreuil > 1) return 0.0f;
+
 	return static_cast<float>(nbRepPlusQueUnMasque) / nbRepVaudreuil * 100.0f;
 }
 
+float stat06(const Infection* infection, const size_t nbRepondants) {
+	if (nbRepondants < 1) return 0.0f;
+
+	uint16_t nbRepUtilDesinfectant = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if ((infection + i)->r7 == true) {
+			nbRepUtilDesinfectant++;
+		}
+	}
+
+	return static_cast<float>(nbRepUtilDesinfectant) / nbRepondants * 100.0f;
+}
+
+const char* stat07(const Infection* infection, const size_t& nbRepondants) {
+	if (nbRepondants < 1) return "Pas de désinfectant";
+
+	uint32_t counts[5] = { 0 };
+	uint8_t maxIndex = 1;
+
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		uint8_t choix = infection[i].r8;
+		if (choix >= 1 && choix <= 5)
+			counts[choix - 1]++;
+	}
+
+	for (uint8_t i = 2; i < 5; i++) {
+		if (counts[i] > counts[maxIndex])
+			maxIndex = i;
+	}
+
+	static const char* desinfectants[5] = {
+		"Pas de désinfectant",
+		"Savon à vaisselle",
+		"Purell",
+		"Eau de Javel",
+		"Alcool à friction"
+	};
+
+	return desinfectants[maxIndex];
+}
+
+uint16_t stat08(const Protection& protection, const Infection* infection, const size_t nbRepondants) {
+	if (nbRepondants < 1) return 0;
+
+	uint16_t nbRep = 0;
+	for (uint16_t i = 0; i < nbRepondants; i++) {
+		if ((infection + i)->r10 < 1 && (infection + i)->r8 == 1 && protection.r4[i] == 'O')
+			nbRep++;
+	}
+
+	return nbRep;
+}
 
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[])
 {
