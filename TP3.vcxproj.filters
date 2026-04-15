@@ -21,6 +21,9 @@
     <ClInclude Include="Header\Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header\cvm_23.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Liste.cpp">
@@ -34,6 +37,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Users\Jozad\OneDrive\Documentos\SchoolDocs\Session_2\C-21-Prog\TP3_etudiants\C21_LAB_3_Base.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\cvm_23.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

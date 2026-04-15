@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\cvm_23.h" />
     <ClInclude Include="Header\Liste.h" />
     <ClInclude Include="Header\Stats.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Users\Jozad\OneDrive\Documentos\SchoolDocs\Session_2\C-21-Prog\TP3_etudiants\C21_LAB_3_Base.cpp" />
+    <ClCompile Include="Source\cvm_23.cpp" />
     <ClCompile Include="Source\Liste.cpp" />
     <ClCompile Include="Source\Principal.cpp" />
     <ClCompile Include="Source\Stats.cpp" />

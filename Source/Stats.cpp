@@ -133,6 +133,11 @@ uint16_t stat08(const Protection& protection, const Infection* infection, const 
 	return nbRep;
 }
 
+float stat09(const Protection& protection, const Infection*, const Repondant* repondant, const size_t nbRepondant) {
+	if (nbRepondant < 1) return 0.0f;
+}
+
+
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[])
 {
 	std::string name = "C21-LAB-3-Sondage.txt";											// exemple avec un path "C:/dossier/C21-LAB-3-Sondage.txt"

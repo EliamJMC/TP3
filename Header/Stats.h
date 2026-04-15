@@ -38,4 +38,6 @@ const char* stat07(const Infection* infection, const size_t& nbRepondants);
 
 uint16_t stat08(const Protection& protection, const Infection* infection, const size_t nbRepondants);
 
+float stat09(const Protection& protection, const Infection*, const Repondant* repondant, const size_t nbRepondant);
+
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[]);
