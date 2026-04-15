@@ -1,14 +1,14 @@
 #pragma once
 #include<string>
 
-struct Ville {
+struct Data {
 	std::string nom;
 	unsigned int nbTest = 0;
 };
 
 struct Node {
+	Data data;
 	Node* next;
-	Ville ville;
 };
 
 struct LinkedList {
@@ -17,4 +17,5 @@ struct LinkedList {
 
 bool lLEmpty(const LinkedList& linkedList);
 size_t lLSize(const LinkedList& linkedList);
-void lLPushBack(LinkedList& linkedList);
+void lLPushBack(LinkedList& linkedList, Data data);
+void lLPopBack(LinkedList& linkedList);
