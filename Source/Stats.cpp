@@ -6,11 +6,13 @@
 
 #include "../Header/Stats.h"
 
-uint16_t stat01(const bool* r1, const size_t& nbRepondants) {
-	if (nbRepondants < 1) return 0;
+extern size_t nb_repondants;
+
+uint16_t stat_01(const bool* r1) {
+	if (nb_repondants < 1) return 0;
 
 	uint16_t count = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if (*(r1+i) == true)
 			count++;
 	}
@@ -18,11 +20,11 @@ uint16_t stat01(const bool* r1, const size_t& nbRepondants) {
 	return count;
 }
 
-uint16_t stat02(const char r3[], const size_t& nbRepondants) {
-	if (nbRepondants < 1) return 0;
+uint16_t stat_02(const char r3[]) {
+	if (nb_repondants < 1) return 0;
 
 	uint16_t count = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if (r3[i] == 'O')
 			count++;
 	}
@@ -30,76 +32,82 @@ uint16_t stat02(const char r3[], const size_t& nbRepondants) {
 	return count;
 }
 
-float stat03(const int r2[], const Repondant* repondants, const size_t& nbRepondants) {
-	if (nbRepondants < 1) return 0;
+float stat_03(const int r2[], const Repondant* repondants) {
+	if (nb_repondants < 1) return 0;
 
-	uint16_t total = 0;
+	float total = 0;
 	uint16_t nbRepEntreTrenteEtQuarente = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if ((repondants + i)->age > 29 && (repondants + i)->age < 40) {
-			total += static_cast<uint16_t>(r2[i]);
+			total += static_cast<float>(r2[i]);
 			nbRepEntreTrenteEtQuarente++;
 		}
 	}
+
 	if (nbRepEntreTrenteEtQuarente < 1) return 0.0f;
 
-	return static_cast<float>(total) / nbRepEntreTrenteEtQuarente;
+	return total / nbRepEntreTrenteEtQuarente;
 }
 
-float stat04(const Protection& protection, const Repondant* repondants, const size_t& nbRepondants) {
-	if (nbRepondants < 1) return 0;
+float stat_04(const Protection& protection, const Repondant* repondants) {
+	if (nb_repondants < 1) return 0;
 
 	float total = 0;
 	uint16_t nbRepUtiliserDecoDormir = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if (protection.r5[i] == 'O' || protection.r6[i] == 'O') {
 			total += static_cast<float>((repondants + i)->age);
 			nbRepUtiliserDecoDormir++;
 		}
 	}
+
 	if (nbRepUtiliserDecoDormir < 1) return 0.0f;
 
 	return total / nbRepUtiliserDecoDormir;
 }
 
-float stat05(const int r2[], const Repondant* repondants, const size_t nbRepondants) {
-	if (nbRepondants < 1) return 0.0f;
+float stat_05(const int r2[], const Repondant* repondants) {
+	if (nb_repondants < 1) return 0.0f;
 
 	uint16_t nbRepVaudreuil = 0;
 	uint16_t nbRepPlusQueUnMasque = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if ((repondants + i)->ville == "Vaudreuil") {
 			nbRepVaudreuil++;
-			if (r2[i] > 1) {
-				nbRepPlusQueUnMasque++;
-			}
+
+			if (r2[i] > 1) nbRepPlusQueUnMasque++;
 		}
 	}
+
 	if (nbRepVaudreuil > 1) return 0.0f;
 
 	return static_cast<float>(nbRepPlusQueUnMasque) / nbRepVaudreuil * 100.0f;
 }
 
-float stat06(const Infection* infection, const size_t nbRepondants) {
-	if (nbRepondants < 1) return 0.0f;
+float stat_06(const Infection* infection) {
+	if (nb_repondants < 1) return 0.0f;
 
 	uint16_t nbRepUtilDesinfectant = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
-		if ((infection + i)->r7 == true) {
+
+	for (uint16_t i = 0; i < nb_repondants; i++) {
+		if ((infection + i)->r8 != 1) {
 			nbRepUtilDesinfectant++;
 		}
 	}
 
-	return static_cast<float>(nbRepUtilDesinfectant) / nbRepondants * 100.0f;
+	if (nb_repondants < 1) return 0.0f;
+
+	return static_cast<float>(nbRepUtilDesinfectant) / nb_repondants * 100.0f;
 }
 
-const char* stat07(const Infection* infection, const size_t& nbRepondants) {
-	if (nbRepondants < 1) return "Pas de désinfectant";
+const char* stat_07(const Infection* infection) {
+	if (nb_repondants < 1) return "Pas de désinfectant";
 
 	uint32_t counts[5] = { 0 };
 	uint8_t maxIndex = 1;
 
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		uint8_t choix = infection[i].r8;
 		if (choix >= 1 && choix <= 5)
 			counts[choix - 1]++;
@@ -121,11 +129,12 @@ const char* stat07(const Infection* infection, const size_t& nbRepondants) {
 	return desinfectants[maxIndex];
 }
 
-uint16_t stat08(const Protection& protection, const Infection* infection, const size_t nbRepondants) {
-	if (nbRepondants < 1) return 0;
+uint16_t stat_08(const Protection& protection, const Infection* infection) {
+	if (nb_repondants < 1) return 0;
 
 	uint16_t nbRep = 0;
-	for (uint16_t i = 0; i < nbRepondants; i++) {
+
+	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if ((infection + i)->r10 < 1 && (infection + i)->r8 == 1 && protection.r4[i] == 'O')
 			nbRep++;
 	}
@@ -133,14 +142,30 @@ uint16_t stat08(const Protection& protection, const Infection* infection, const 
 	return nbRep;
 }
 
-float stat09(const Protection& protection, const Infection*, const Repondant* repondant, const size_t nbRepondant) {
-	if (nbRepondant < 1) return 0.0f;
-}
+float stat_09(const Protection& protection, const Infection* infection, const Repondant* repondants) {
+	if (nb_repondants < 1) return 0.0f;
 
+	float total = 0;
+	uint16_t nbRepMtlInf = 0;
+
+	for (uint16_t i = 0; i < nb_repondants; i++) {
+		bool mtl = (repondants + i)->ville == "Montreal";
+		bool infecte = (infection + i)->r9 == 1;
+		bool masque = protection.r2[i] >= 1;
+		bool desinfectant = (*(infection + i)).r8 != 1;
+
+		if (mtl && infecte && (!masque || !desinfectant)) {
+			total += static_cast<float>((repondants + i)->scolarite);
+			nbRepMtlInf++;
+		}
+	}
+
+	return total / nbRepMtlInf;
+}
 
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[])
 {
-	std::string name = "C21-LAB-3-Sondage.txt";											// exemple avec un path "C:/dossier/C21-LAB-3-Sondage.txt"
+	std::string name = "C:/Temp/tests.txt";											// exemple avec un path "C:/dossier/C21-LAB-3-Sondage.txt"
 	std::fstream f(name, std::ios::in);
 
 	if (f.fail()) // fichier ouvert ?

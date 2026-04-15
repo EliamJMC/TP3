@@ -26,18 +26,18 @@ struct Repondant
 	int scolarite;
 };
 
-uint16_t stat01(const bool* r1, const size_t& nbRepondants);
-uint16_t stat02(const char r3[], const size_t& nbRepondants);
+uint16_t stat_01(const bool* r1);
+uint16_t stat_02(const char r3[]);
 
-float stat03(const int r2[], const Repondant* repondants, const size_t& nbRepondants);
-float stat04(const Protection& protection, const Repondant* repondants, const size_t& nbRepondants);
-float stat05(const int r2[], const Repondant* repondants, const size_t nbRepondants);
-float stat06(const Infection* infection, const size_t nbRepondants);
+float stat_03(const int r2[], const Repondant* repondants);
+float stat_04(const Protection& protection, const Repondant* repondants);
+float stat_05(const int r2[], const Repondant* repondants);
+float stat_06(const Infection* infection);
 
-const char* stat07(const Infection* infection, const size_t& nbRepondants);
+const char* stat_07(const Infection* infection);
 
-uint16_t stat08(const Protection& protection, const Infection* infection, const size_t nbRepondants);
+uint16_t stat_08(const Protection& protection, const Infection* infection);
 
-float stat09(const Protection& protection, const Infection*, const Repondant* repondant, const size_t nbRepondant);
+float stat_09(const Protection& protection, const Infection* infection, const Repondant* repondants);
 
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[]);
