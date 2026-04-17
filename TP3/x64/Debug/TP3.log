@@ -1,2 +1,3 @@
 ﻿  Stats.cpp
+C:\Temp\TP3\Source\Stats.cpp(170,51): warning C4838: conversion from 'const int' to 'unsigned int' requires a narrowing conversion
   TP3.vcxproj -> C:\Temp\TP3\x64\Debug\TP3.exe

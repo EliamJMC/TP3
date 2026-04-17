@@ -26,6 +26,7 @@ int main()
 	const char* stat07	= stat_07(inf);
 	uint16_t stat08		= stat_08(*pro, inf);
 	float stat09		= stat_09(*pro, inf, rep);
+	const char* stat10	= stat_10(inf, rep);
 
 	std::cout << stat01 << std::endl;
 	std::cout << stat02 << std::endl;
@@ -36,6 +37,7 @@ int main()
 	std::cout << stat07 << std::endl;
 	std::cout << stat08 << std::endl;
 	std::cout << stat09 << std::endl;
+	std::cout << stat10 << std::endl;
 
 	_getch();
 

@@ -35,11 +35,11 @@ void lLClear(LinkedList& linkedList) {
 	}
 } 
 
-Node* lLSearchNode(const LinkedList& linkedList, std::string nomVille) {
+Node* lLSearchNodeByName(const LinkedList& linkedList, std::string nomVille) {
 	Node* actual = linkedList.back;
 
 	while (actual != nullptr) {
-		if (actual->data.nom == nomVille) 
+		if (actual->data.ville == nomVille) 
 			return actual;
 		
 		actual = actual->next;
@@ -48,17 +48,28 @@ Node* lLSearchNode(const LinkedList& linkedList, std::string nomVille) {
 	delete actual;
 	return nullptr;
 }
+Node* lLSearchHighestTest(const LinkedList& linkedList) {
+	Node* actual = linkedList.back->next;
+	Node* highest = linkedList.back;
 
-void lLUpdate(LinkedList& linkedList, Data data) {
-	Node* ville = lLSearchNode(linkedList, data.nom);
+	for (uint16_t i = 0; i < lLSize(linkedList); i++) {
+		if (actual->data.nbTest > highest->data.nbTest)
+			highest = actual;
 
-	if (ville == nullptr) {
-
-		lLPushBack(linkedList, data);
-
-		delete ville;
-		return;
+		actual = actual->next;
 	}
 
-	ville->data.nbTest += data.nbTest;
+	delete actual;
+	return highest;
+}
+
+void lLUpdate(LinkedList& linkedList, Data data) {
+	Node* ville = lLSearchNodeByName(linkedList, data.ville);
+
+	if (ville == nullptr)
+		lLPushBack(linkedList, data);
+	else
+		ville->data.nbTest += data.nbTest;
+
+	delete ville;
 }

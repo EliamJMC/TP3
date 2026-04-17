@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "../Header/Stats.h"
+#include "../Header/Liste.h"
 
 extern size_t nb_repondants;
 
@@ -80,7 +81,7 @@ float stat_05(const int r2[], const Repondant* repondants) {
 		}
 	}
 
-	if (nbRepVaudreuil > 1) return 0.0f;
+	if (nbRepVaudreuil < 1) return 0.0f;
 
 	return static_cast<float>(nbRepPlusQueUnMasque) / nbRepVaudreuil * 100.0f;
 }
@@ -161,6 +162,19 @@ float stat_09(const Protection& protection, const Infection* infection, const Re
 	}
 
 	return total / nbRepMtlInf;
+}
+
+const char* stat_10(const Infection* infection, const Repondant* repondants) {
+	LinkedList linkedList;
+	for (uint16_t i = 0; i < nb_repondants; i++) {
+		Data data = { (repondants + i)->ville, infection->r10 };
+		lLUpdate(linkedList, data);
+	}
+
+	Node* highestNBTest = lLSearchHighestTest(linkedList);
+	const char* ville = (highestNBTest->data.ville).c_str();;
+	delete highestNBTest;
+	return ville;
 }
 
 size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[])
