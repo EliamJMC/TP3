@@ -6,11 +6,8 @@ size_t lLSize(const LinkedList& linkedList) {
 	if (lLEmpty(linkedList)) return 0;
 	Node* actual = linkedList.back;
 	size_t count = 0;
-	while (actual->next != nullptr) {
-		actual = actual->next;
-		count++;
-	}
-	delete actual;
+	for (Node* current = linkedList.back; current != nullptr; current = current->next)
+		++count;
 	return count;
 }
 
@@ -30,7 +27,7 @@ void lLPopBack(LinkedList& linkedList) {
 }
 
 void lLClear(LinkedList& linkedList) {
-	while(lLSize(linkedList) != 0) {
+	while(linkedList.back) {
 		lLPopBack(linkedList);
 	}
 } 
@@ -45,21 +42,19 @@ Node* lLSearchNodeByName(const LinkedList& linkedList, std::string nomVille) {
 		actual = actual->next;
 	}
 
-	delete actual;
 	return nullptr;
 }
 Node* lLSearchHighestTest(const LinkedList& linkedList) {
+	if (lLEmpty(linkedList)) return nullptr;
 	Node* actual = linkedList.back->next;
 	Node* highest = linkedList.back;
 
-	for (uint16_t i = 0; i < lLSize(linkedList); i++) {
+	while (actual != nullptr) {
 		if (actual->data.nbTest > highest->data.nbTest)
 			highest = actual;
-
 		actual = actual->next;
 	}
 
-	delete actual;
 	return highest;
 }
 
@@ -70,6 +65,4 @@ void lLUpdate(LinkedList& linkedList, Data data) {
 		lLPushBack(linkedList, data);
 	else
 		ville->data.nbTest += data.nbTest;
-
-	delete ville;
 }

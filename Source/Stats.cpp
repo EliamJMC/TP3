@@ -161,24 +161,69 @@ float stat_09(const Protection& protection, const Infection* infection, const Re
 		}
 	}
 
+	if (nbRepMtlInf < 1) return 0.0f;
+
 	return total / nbRepMtlInf;
 }
 
-const char* stat_10(const Infection* infection, const Repondant* repondants) {
+std::string stat_10(const Infection* infection, const Repondant* repondants) {
 	LinkedList linkedList;
-	for (uint16_t i = 0; i < nb_repondants; i++) {
-		Data data = { (repondants + i)->ville, infection->r10 };
+
+	for (int16_t i = 0; i < nb_repondants; i++) {
+		Data data = { (repondants + i)->ville, static_cast<unsigned int>((infection + i)->r10) }; 
 		lLUpdate(linkedList, data);
 	}
 
 	Node* highestNBTest = lLSearchHighestTest(linkedList);
-	const char* ville = (highestNBTest->data.ville).c_str();;
-	delete highestNBTest;
+	std::string ville = highestNBTest->data.ville;
+	
+	lLClear(linkedList);
 	return ville;
 }
 
-size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[])
-{
+void printStatsQuestions() {
+	std::cout << "01) Combien de personnes toussent souvent ?" << std::endl;
+	std::cout << "02) Combien de personnes veulent un masque dans leur auto ?" << std::endl;
+	std::cout << "03) Combien de masques, en moyenne, ont les gens qui sont dans la trentaine ?" << std::endl;
+	std::cout << "04) Quel est l'age moyen des gens qui se serviraient d’un masque pour decorer ou pour dormir ?" << std::endl;
+	std::cout << "05) Quel pourcentage de repondants de Vaudreuil utilisent plus d'un masque ?" << std::endl;
+	std::cout << "06) Quel pourcentage de la population utilise du desinfectant ?" << std::endl;
+	std::cout << "07) Quel est le type de desinfectant le plus repandu ?" << std::endl;
+	std::cout << "08) Combien de gens non testes et n’utilisant pas de desinfectant ont deja emprunte un masque ? " << std::endl;
+	std::cout << "09) Combien d'annees de scolarite, en moyenne, ont les gens infectes de Montreal sans masque ou sans desinfectant" << std::endl;
+	std::cout << "10) Quelle est la ville ayant fait subir le plus grand nombre de tests ? " << std::endl;
+}
+
+void printStatsResults(const Stats& stats) {
+	std::cout << std::fixed << std::setprecision(1);
+
+	std::cout << "01) = " << stats._01 << std::endl;
+	std::cout << "02) = " << stats._02 << std::endl;
+	std::cout << "03) = " << stats._03 << std::endl;
+	std::cout << "04) = " << stats._04 << std::endl;
+	std::cout << "05) = " << stats._05 << " %" << std::endl;
+	std::cout << "06) = " << stats._06 << " %" << std::endl;
+	std::cout << "07) = " << stats._07 << std::endl;
+	std::cout << "08) = " << stats._08 << std::endl;
+	std::cout << "09) = " << stats._09 << std::endl;
+	std::cout << "10) = " << stats._10 << std::endl;
+}
+
+void setStats(Stats& stats, const bool* r1, const Protection* pro, const Infection* inf, const Repondant* rep) {
+	stats._01 = stat_01(r1);
+	stats._02 = stat_02(pro->r3);
+	stats._03 = stat_03(pro->r2, rep);
+	stats._04 = stat_04(*pro, rep);
+	stats._05 = stat_05(pro->r2, rep);
+	stats._06 = stat_06(inf);
+	stats._07 = stat_07(inf);
+	stats._08 = stat_08(*pro, inf);
+	stats._09 = stat_09(*pro, inf, rep);
+	stats._10 = stat_10(inf, rep);
+}
+
+
+size_t lireLesDonnéesDuSondage(bool r1[], Protection* pro, Infection inf[], Repondant rep[]) {
 	std::string name = "C:/Temp/tests.txt";											// exemple avec un path "C:/dossier/C21-LAB-3-Sondage.txt"
 	std::fstream f(name, std::ios::in);
 
