@@ -53,7 +53,7 @@ float stat_03(const int r2[], const Repondant* repondants) {
 float stat_04(const Protection& protection, const Repondant* repondants) {
 	if (nb_repondants < 1) return 0;
 
-	float total = 0;
+	float total = 0; 
 	uint16_t nbRepUtiliserDecoDormir = 0;
 	for (uint16_t i = 0; i < nb_repondants; i++) {
 		if (protection.r5[i] == 'O' || protection.r6[i] == 'O') {
