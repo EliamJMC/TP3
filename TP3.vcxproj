@@ -29,6 +29,9 @@
     <ClCompile Include="Source\Principal.cpp" />
     <ClCompile Include="Source\Stats.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeList.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

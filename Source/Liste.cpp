@@ -1,6 +1,8 @@
 #include "../Header/Liste.h"
 
-bool lLEmpty(const LinkedList& linkedList) { return linkedList.back == nullptr; }
+bool lLEmpty(const LinkedList& linkedList) { 
+	return linkedList.back == nullptr; 
+}
 
 size_t lLSize(const LinkedList& linkedList) {
 	if (lLEmpty(linkedList)) return 0;
